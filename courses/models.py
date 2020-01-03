@@ -29,3 +29,6 @@ class Course(models.Model):
     ) # auto_now toda vez que for salvo ele vai ser atualizado a data
 
     objects = CourseManager()
+
+    def __str__(self):
+        return self.name
