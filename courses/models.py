@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 class CourseManager(models.Manager):
 
@@ -12,8 +13,9 @@ class Course(models.Model):
 
     name = models.CharField('Nome', max_length=100)
     slug = models.SlugField('Atalho')
-    description = models.TextField('Descrição', blank=True
+    description = models.TextField('Descrição Simples', blank=True
                                    ) # blank=True diz que o campo nao é obrigatorio
+    about = models.TextField('Sobre o Curso', blank=True)
     start_date = models.DateField(
         'Data de Início', null=True, blank=True
     ) #null a nivel de banco de dados ele pode ser nulabo
@@ -32,3 +34,14 @@ class Course(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return f'/cursos/{self.slug}'
+
+    # def get_absolute_url(self):
+    #     return reverse('details', args=[self.slug])
+
+    class Meta(): # classe meta é do model, fazemos algumas alteraçoes
+        verbose_name = 'Curso'
+        verbose_name_plural = 'Cursos'
+        ordering = ['name'] # alteramos a ordem dos cursos pra ordenar por ordem crescenta
