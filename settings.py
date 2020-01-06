@@ -137,3 +137,8 @@ EMAIL_HOST_PASSWORD = 'vaitenta99'
 EMAIL_PORT = 587
 
 CONTACT_EMAIL = 'ltsj13@gmail.com' # para esse email
+
+#Auth Usuarios
+LOGIN_URL = 'accounts:login'
+LOGIN_REDIRECT_URL = 'core:home'
+LOGOUT_URL = 'accounts:logout'
