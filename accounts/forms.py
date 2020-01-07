@@ -6,7 +6,7 @@ class RegisterForm(UserCreationForm):
 
     email = forms.EmailField(label='E-mail')
 
-    def clean_email(self):
+    def clean_email(self): # serve para validação do email (email único)
         email = self.cleaned_data['email']
         if User.objects.filter(email=email).exists():
             raise forms.ValidationError('Já existe usuário com este E-mail.')
