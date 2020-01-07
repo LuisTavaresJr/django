@@ -31,7 +31,14 @@ def register(request):
 @login_required
 def edit(request):
     template_name = 'accounts/edit.html'
-    form = EditAccountsForm()
     context = {}
+    if request.method == 'POST':
+        form = EditAccountsForm(request.POST, instance=request.user) # a instacia q esta sendo alterada
+        if form.is_valid():
+            form.save()
+            form = EditAccountsForm(instance=request.user) # formulario vazio
+            context['success'] = True # apenas para fazer um if no html
+    else:
+        form = EditAccountsForm(instance=request.user)
     context['form'] = form
     return render(request, template_name, context)
