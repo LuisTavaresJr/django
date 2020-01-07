@@ -142,3 +142,4 @@ CONTACT_EMAIL = 'ltsj13@gmail.com' # para esse email
 LOGIN_URL = 'accounts:login'
 LOGIN_REDIRECT_URL = 'core:home'
 LOGOUT_URL = 'accounts:logout'
+AUTH_USER_MODEL = 'accounts.User' # pra o django saber q o usuario do sistima é o nosso model e nao o padrao do django
