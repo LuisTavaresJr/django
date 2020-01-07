@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
-from .forms import RegisterForm
+from .forms import RegisterForm, EditAccountsForm
 
 @login_required # verifica antes se o usuario esta logado pra dar permissao a acesar o painel(dashboard)
 def dashboard(request):
@@ -31,4 +31,7 @@ def register(request):
 @login_required
 def edit(request):
     template_name = 'accounts/edit.html'
-    return render(request, template_name)
+    form = EditAccountsForm()
+    context = {}
+    context['form'] = form
+    return render(request, template_name, context)
