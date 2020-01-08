@@ -1,6 +1,3 @@
-import re
-
-#from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.db import models
 from django.core import validators
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, UserManager
@@ -9,10 +6,7 @@ from django.conf import settings
 
 class User(AbstractBaseUser, PermissionsMixin):
 
-    username = models.CharField('Nome de Usuário', max_length=30, unique=True, validators=[validators.RegexValidator(re.compile('^[\w.@+-]+'),
-                                                                      'O nome do usuário so pode conter letras,'
-                                                                      'digitos ou os seguintes caracteres: @/./+/-/_',
-                                                                      'invalid')])
+    username = models.CharField('Nome de Usuário', max_length=30, unique=True)
 
     email = models.EmailField('E-mail', unique=True) # agora temos um email unico
     name = models.CharField('Nome', max_length=100, blank=True)
