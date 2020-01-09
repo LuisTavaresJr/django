@@ -5,6 +5,15 @@ import re
 
 User = get_user_model() # chamando o User q o django reconhece como padrao (no caso o nosso criado)
 
+class PasswordResetForm(forms.Form):
+    email = forms.EmailField(label='E-mail')
+
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if User.objects.filter(email=email).exists():
+            return email
+        raise forms.ValidationError('Nenhum usuário encontrado com este e-mail')
+
 
 class RegisterForm(forms.ModelForm):
 
