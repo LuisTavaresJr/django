@@ -69,6 +69,10 @@ class Enrollment(models.Model):
 
     updated_at = models.DateTimeField('Atualizado em', auto_now=True)
 
+    def active(self): # ativação automatica, assim q se inscrever status fica aprovado
+        self.status = 1
+        self.save()
+
     class Meta:
         verbose_name = 'Inscrição'
         verbose_name_plural = 'Inscrições'
