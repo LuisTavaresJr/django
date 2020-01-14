@@ -47,3 +47,21 @@ def enrollment(request, slug):
     else:
         messages.info(request, f'Você já está inscrito no curso [{course}].')
     return redirect('accounts:dashboard')
+
+
+def announcements(request, slug):
+    course = get_object_or_404(Course, slug=slug)
+    if not request.user.is_staff: # se nao for equipe, procura a inscrição do usuario
+        # verificação se o usuario tem acesso ao curso
+        enrollment = get_object_or_404(
+            Enrollment, user=request.user, course=course
+        )
+        # verificação se usuario esta aprovado pelo status
+        if not enrollment.is_approved():
+            messages.error(request, 'A sua inscrição não esta aprovada')
+            return redirect('accounts:dashboard')
+    template_name = 'courses/announcements.html'
+    context = {
+        'course': course
+    }
+    return render(request, template_name, context)
