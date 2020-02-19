@@ -66,7 +66,6 @@ class Enrollment(models.Model):
         'Situação', choices=STATUS_CHOICES, default=0, blank=True
     )
     created_at = models.DateTimeField('Criado em', auto_now_add=True)
-
     updated_at = models.DateTimeField('Atualizado em', auto_now=True)
 
     def active(self): # ativação automatica, assim q se inscrever status fica aprovado
@@ -80,3 +79,49 @@ class Enrollment(models.Model):
         verbose_name = 'Inscrição'
         verbose_name_plural = 'Inscrições'
         unique_together = (('user', 'course'),)# para que nao tenha duplicidade nas iscricoes dos cursos
+
+
+class Annoucement(models.Model):
+    course = models.ForeignKey(Course, verbose_name='Curso', on_delete=models.CASCADE)
+    title = models.CharField('Titulo', max_length=100)
+    content = models.TextField('Conteúdo')
+
+    created_at = models.DateTimeField('Criado em', auto_now_add=True)
+    updated_at = models.DateTimeField('Atualizado em', auto_now=True)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'Anúcio'
+        verbose_name_plural = 'Anúcios'
+        ordering = ['-created_at']
+
+
+class Comment(models.Model):
+
+    annoucement = models.ForeignKey(
+        Annoucement, verbose_name='Anúncio', related_name='comments', on_delete=models.CASCADE
+    )
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='usuário', on_delete=models.CASCADE)
+    comment = models.TextField('Comentário')
+
+    created_at = models.DateTimeField('Criado em', auto_now_add=True)
+    updated_at = models.DateTimeField('Atualizado em', auto_now=True)
+
+    class Meta:
+        verbose_name = 'Comentário'
+        verbose_name_plural = 'Comentários'
+        ordering = ['created_at']
+
+
+
+
+
+
+
+
+
+
+
+
